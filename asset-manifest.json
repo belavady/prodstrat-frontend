@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/prodstrat-frontend/static/css/main.83a6ad9d.css",
+    "main.js": "/prodstrat-frontend/static/js/main.ba45a87a.js",
+    "index.html": "/prodstrat-frontend/index.html",
+    "main.83a6ad9d.css.map": "/prodstrat-frontend/static/css/main.83a6ad9d.css.map",
+    "main.ba45a87a.js.map": "/prodstrat-frontend/static/js/main.ba45a87a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.83a6ad9d.css",
+    "static/js/main.ba45a87a.js"
+  ]
+}
