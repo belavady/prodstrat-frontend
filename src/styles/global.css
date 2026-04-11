@@ -1,0 +1,111 @@
+/* ProdStrat Global Styles */
+
+:root {
+  --ps-bg: #FAFAF7;
+  --ps-surface: #FFFFFF;
+  --ps-surface-2: #F4F3EF;
+  --ps-border: rgba(0, 0, 0, 0.08);
+  --ps-border-strong: rgba(0, 0, 0, 0.15);
+  --ps-text: #1A1A1A;
+  --ps-muted: #6B6B6B;
+  --ps-hint: #9A9A9A;
+
+  /* STS dimension colours */
+  --ps-signal: #B87333;
+  --ps-signal-bg: #FDF3E7;
+  --ps-signal-border: #E8C87A;
+  --ps-signal-text: #633806;
+
+  --ps-trust: #185FA5;
+  --ps-trust-bg: #EBF3FC;
+  --ps-trust-border: #9FC5ED;
+  --ps-trust-text: #0C447C;
+
+  --ps-shape: #0F6E56;
+  --ps-shape-bg: #E1F5EE;
+  --ps-shape-border: #5DCAA5;
+  --ps-shape-text: #085041;
+
+  /* Status */
+  --ps-break: #E24B4A;
+  --ps-break-bg: #FCEBEB;
+  --ps-break-border: #F09595;
+  --ps-break-text: #501313;
+
+  --ps-strong: #1D9E75;
+  --ps-strong-bg: #E1F5EE;
+
+  --ps-warning: #BA7517;
+  --ps-warning-bg: #FDF8F0;
+  --ps-warning-border: #E8C87A;
+
+  --ps-radius-sm: 6px;
+  --ps-radius-md: 10px;
+  --ps-radius-lg: 14px;
+
+  --ps-font: 'Georgia', 'Times New Roman', serif;
+  --ps-font-sans: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: var(--ps-bg);
+  color: var(--ps-text);
+  font-family: var(--ps-font-sans);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--ps-border-strong);
+  border-radius: 3px;
+}
+
+/* Section fade-in animation */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ps-fade-in {
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+/* Streaming cursor blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.ps-cursor::after {
+  content: '|';
+  animation: blink 0.8s ease infinite;
+  color: var(--ps-signal);
+  margin-left: 1px;
+}
+
+/* Print styles */
+@media print {
+  body { background: white; }
+  .ps-no-print { display: none !important; }
+  .ps-section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .ps-page-break {
+    page-break-before: always;
+  }
+}
