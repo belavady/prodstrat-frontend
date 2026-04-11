@@ -123,15 +123,28 @@ export default function ReportStream({ inputs, onReset, onForceRerun }) {
     onForceRerun(inputs)
   }
 
-  const handleSaveHTML = () => {
-    if (!reportId) return
-    window.open(`${API}/api/reports/${reportId}/download`, '_blank')
+  const [linkCopied, setLinkCopied] = useState(false)
+
+  const shareableLink = reportId
+    ? `${API}/api/reports/${reportId}/view`
+    : null
+
+  const handleCopyLink = () => {
+    if (!shareableLink) return
+    navigator.clipboard.writeText(shareableLink).then(() => {
+      setLinkCopied(true)
+      setTimeout(() => setLinkCopied(false), 2500)
+    })
+  }
+
+  const handleOpenReport = () => {
+    if (!shareableLink) return
+    window.open(shareableLink, '_blank')
   }
 
   const handleSavePDF = () => {
-    if (!reportId) return
-    // Open HTML in new tab, then print
-    const win = window.open(`${API}/api/reports/${reportId}/download`, '_blank')
+    if (!shareableLink) return
+    const win = window.open(shareableLink, '_blank')
     if (win) {
       win.addEventListener('load', () => {
         setTimeout(() => win.print(), 800)
@@ -262,7 +275,7 @@ export default function ReportStream({ inputs, onReset, onForceRerun }) {
         </div>
       )}
 
-      {/* Complete — save buttons */}
+      {/* Complete — shareable link */}
       {connectionState === 'complete' && (
         <div style={{ width: '100%', textAlign: 'center' }}>
           <div style={{
@@ -281,15 +294,35 @@ export default function ReportStream({ inputs, onReset, onForceRerun }) {
           <div style={{ fontSize: '12px', color: 'var(--ps-muted)', marginBottom: '2rem', fontFamily: 'var(--ps-font-sans)' }}>
             {inputs.company} · {inputs.specialisation}
           </div>
-          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
-            <button onClick={handleSaveHTML} style={btnPrimary}>
-              Save HTML Report
-            </button>
-            <button onClick={handleSavePDF} style={btnSecondary}>
-              Save PDF
-            </button>
-          </div>
-          <button onClick={onReset} style={{ ...btnGhost, marginTop: '1rem' }}>
+
+          {/* Shareable link box */}
+          {shareableLink && (
+            <div style={{
+              background: '#FFFFFF', border: '0.5px solid var(--ps-border-strong)',
+              borderRadius: '10px', padding: '1rem 1.25rem',
+              marginBottom: '1rem', textAlign: 'left'
+            }}>
+              <div style={{ fontSize: '10px', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--ps-muted)', fontFamily: 'monospace', marginBottom: '0.5rem' }}>
+                Shareable Link
+              </div>
+              <div style={{ fontSize: '11px', color: 'var(--ps-muted)', wordBreak: 'break-all', marginBottom: '0.75rem', fontFamily: 'monospace', lineHeight: '1.5' }}>
+                {shareableLink}
+              </div>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button onClick={handleCopyLink} style={{ ...btnPrimary, flex: 1, fontSize: '12px' }}>
+                  {linkCopied ? 'Copied!' : 'Copy Link'}
+                </button>
+                <button onClick={handleOpenReport} style={{ ...btnSecondary, flex: 1, fontSize: '12px' }}>
+                  Open Report
+                </button>
+                <button onClick={handleSavePDF} style={{ ...btnSecondary, flex: 1, fontSize: '12px' }}>
+                  Save PDF
+                </button>
+              </div>
+            </div>
+          )}
+
+          <button onClick={onReset} style={{ ...btnGhost, marginTop: '0.5rem' }}>
             Run Another Report
           </button>
         </div>

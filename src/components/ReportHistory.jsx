@@ -92,7 +92,7 @@ export default function ReportHistory({ onLoad, onNewReport }) {
                 View
               </button>
               <button
-                onClick={() => window.open(`${API}/api/reports/${r.id}/download`, '_blank')}
+                onClick={() => window.open(`${API}/api/reports/${r.id}/view`, '_blank')}
                 style={{
                   fontSize: '12px', padding: '4px 10px',
                   background: '#1A1A1A',
@@ -101,7 +101,7 @@ export default function ReportHistory({ onLoad, onNewReport }) {
                   color: '#FFFFFF', fontFamily: 'var(--ps-font-sans)'
                 }}
               >
-                HTML
+                Open
               </button>
             </div>
           )
