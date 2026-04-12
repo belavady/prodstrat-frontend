@@ -18,15 +18,15 @@ export default function ReportStream({ inputs, onReset, onForceRerun }) {
   const controllerRef = useRef(null)
   const totalAgents = 9
 
-  const loadCachedReport = useCallback((data) => {
-    if (data?.id) setReportId(data.id)
+  const loadCachedReport = useCallback((reportId) => {
+    if (reportId) setReportId(reportId)
     setProgress(100)
     setConnectionState('complete')
   }, [])
 
   useEffect(() => {
     if (inputs._preloaded) {
-      loadCachedReport(inputs._preloaded)
+      loadCachedReport(inputs._preloaded?.id || inputs._preloaded)
       return
     }
 
@@ -72,7 +72,7 @@ export default function ReportStream({ inputs, onReset, onForceRerun }) {
             }
 
             if (event.type === 'cached') {
-              loadCachedReport(event.data)
+              loadCachedReport(event.reportId)
               controller.abort()
               return
             }
@@ -112,8 +112,8 @@ export default function ReportStream({ inputs, onReset, onForceRerun }) {
   }, [inputs, loadCachedReport])
 
   const handleCacheView = () => {
-    if (cacheWarning?.data) {
-      loadCachedReport(cacheWarning.data)
+    if (cacheWarning?.reportId) {
+      loadCachedReport(cacheWarning.reportId)
       setCacheWarning(null)
     }
   }
