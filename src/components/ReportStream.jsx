@@ -10,6 +10,7 @@ const AGENT_SEQUENCE = [
 
 export default function ReportStream({ inputs, onReset, onForceRerun }) {
   const [currentAgent, setCurrentAgent] = useState(null)
+  const [searchingQuery, setSearchingQuery] = useState(null)
   const [completedAgents, setCompletedAgents] = useState([])
   const [connectionState, setConnectionState] = useState('connecting')
   const [reportId, setReportId] = useState(null)
@@ -79,10 +80,16 @@ export default function ReportStream({ inputs, onReset, onForceRerun }) {
 
             if (event.type === 'thinking') {
               setCurrentAgent(event.section)
+              setSearchingQuery(null)
+            }
+
+            if (event.type === 'searching') {
+              setSearchingQuery(event.query || '')
             }
 
             if (event.type === 'done') {
               setCompletedAgents(prev => [...prev, event.section])
+              setSearchingQuery(null)
               setProgress(prev => Math.min(97, prev + Math.floor(97 / totalAgents)))
             }
 
@@ -91,6 +98,7 @@ export default function ReportStream({ inputs, onReset, onForceRerun }) {
               setProgress(100)
               setConnectionState('complete')
               setCurrentAgent(null)
+              setSearchingQuery(null)
             }
 
             if (event.type === 'error') {
@@ -226,6 +234,26 @@ export default function ReportStream({ inputs, onReset, onForceRerun }) {
               transition: 'width 0.6s ease'
             }} />
           </div>
+
+          {/* Live search indicator */}
+          {searchingQuery && (
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: '7px',
+              marginTop: '0.6rem',
+              padding: '5px 10px',
+              background: '#FDF3E7',
+              border: '0.5px solid #E8C87A',
+              borderRadius: '6px'
+            }}>
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" style={{ flexShrink: 0 }}>
+                <circle cx="4.5" cy="4.5" r="3.5" stroke="#B87333" strokeWidth="1.2"/>
+                <line x1="7.2" y1="7.2" x2="10" y2="10" stroke="#B87333" strokeWidth="1.2" strokeLinecap="round"/>
+              </svg>
+              <span style={{ fontSize: '11px', color: '#8B5A1A', fontFamily: 'var(--ps-font-sans)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                Searching: {searchingQuery}
+              </span>
+            </div>
+          )}
 
           {/* Agent checklist */}
           <div style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '6px' }}>

@@ -9,7 +9,8 @@ export default function InputForm({ onSubmit, isLoading }) {
     companyType: 'SaaS',
     role: 'PM',
     specialisation: 'Consumer PM',
-    archetype: 'A'
+    archetype: 'A',
+    liveContext: ''
   })
   const [serverReady, setServerReady] = useState(null)
 
@@ -123,6 +124,30 @@ export default function InputForm({ onSubmit, isLoading }) {
               {selectedArchetype.description}
             </div>
           )}
+        </div>
+
+        {/* Live Intelligence Context */}
+        <div>
+          <label style={labelStyle}>
+            Live Intelligence Context
+            <span style={{ fontWeight: '400', marginLeft: '6px', color: 'var(--ps-hint, #B4AFA8)' }}>optional</span>
+          </label>
+          <textarea
+            value={form.liveContext}
+            onChange={set('liveContext')}
+            placeholder={'Paste recent news, product moves, funding rounds, or competitive intelligence about this company.\n\nFor best results: ask Claude to research this company first, then paste the output here.'}
+            rows={5}
+            style={{
+              ...inputStyle,
+              resize: 'vertical',
+              lineHeight: '1.55',
+              fontSize: '13px',
+              minHeight: '100px'
+            }}
+          />
+          <div style={{ fontSize: '11px', color: 'var(--ps-muted)', marginTop: '0.35rem', fontFamily: 'var(--ps-font-sans)', lineHeight: '1.5' }}>
+            Agents will treat this as verified current intelligence. Leave blank to rely on live web search only.
+          </div>
         </div>
 
         {/* Submit */}
