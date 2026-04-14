@@ -104,6 +104,7 @@ export default function ReportStream({ inputs, onReset, onForceRerun }) {
             if (event.type === 'error') {
               setConnectionState('error')
               setCurrentAgent(null)
+              setSearchingQuery(null)
             }
           }
         }
@@ -239,11 +240,8 @@ export default function ReportStream({ inputs, onReset, onForceRerun }) {
           {searchingQuery && (
             <div style={{
               display: 'flex', alignItems: 'center', gap: '7px',
-              marginTop: '0.6rem',
-              padding: '5px 10px',
-              background: '#FDF3E7',
-              border: '0.5px solid #E8C87A',
-              borderRadius: '6px'
+              marginTop: '0.6rem', padding: '5px 10px',
+              background: '#FDF3E7', border: '0.5px solid #E8C87A', borderRadius: '6px'
             }}>
               <svg width="11" height="11" viewBox="0 0 11 11" fill="none" style={{ flexShrink: 0 }}>
                 <circle cx="4.5" cy="4.5" r="3.5" stroke="#B87333" strokeWidth="1.2"/>
