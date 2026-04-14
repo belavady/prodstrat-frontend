@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/prodstrat-frontend/static/css/main.83a6ad9d.css",
-    "main.js": "/prodstrat-frontend/static/js/main.d032ab6f.js",
+    "main.js": "/prodstrat-frontend/static/js/main.9bbb7dd7.js",
     "index.html": "/prodstrat-frontend/index.html",
     "main.83a6ad9d.css.map": "/prodstrat-frontend/static/css/main.83a6ad9d.css.map",
-    "main.d032ab6f.js.map": "/prodstrat-frontend/static/js/main.d032ab6f.js.map"
+    "main.9bbb7dd7.js.map": "/prodstrat-frontend/static/js/main.9bbb7dd7.js.map"
   },
   "entrypoints": [
     "static/css/main.83a6ad9d.css",
-    "static/js/main.d032ab6f.js"
+    "static/js/main.9bbb7dd7.js"
   ]
 }
